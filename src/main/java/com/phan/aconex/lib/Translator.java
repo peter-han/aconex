@@ -99,7 +99,6 @@ public class Translator {
         /*
         TODO append 1800 in front
          */
-        LOGGER.info("Possible words:\n");
         LOGGER.info(String.join("\n", result));
     }
 

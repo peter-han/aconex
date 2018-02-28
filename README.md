@@ -1,2 +1,5 @@
-# aconex
-1-800-CODING-CHALLENGE
+
+aconex
+======
+
+1-800 Coding challenge exercise @ Aconex

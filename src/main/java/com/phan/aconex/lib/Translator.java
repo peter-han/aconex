@@ -62,6 +62,13 @@ public class Translator {
         if (!StringUtils.isNumeric(purgedPhone))
             throw new IllegalArgumentException("phone number must be numeric, could contains punctuation or whitespace");
 
-        return new WordQuery(dictionary, purgedPhone).getMatches();
+        /*
+        No two consecutive digits can remain unchanged
+         */
+        return new WordQuery(dictionary, purgedPhone)
+                .getMatches()
+                .stream()
+                .filter(s -> !StringUtils.isTwoConsecutiveDigits(s))
+                .collect(Collectors.toSet());
     }
 }

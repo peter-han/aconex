@@ -13,11 +13,6 @@ public class WordQueryTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Dictionary defaultDictionary = Dictionary.getDefault();
-
-    public WordQueryTest() {
-    }
-
     @Test
     public void testNullDictionary() {
         thrown.expect(IllegalArgumentException.class);
@@ -31,7 +26,7 @@ public class WordQueryTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("phone is null");
 
-        new WordQuery(defaultDictionary, null);
+        new WordQuery(getTestDictionary(), null);
     }
 
     @Test
@@ -44,21 +39,19 @@ public class WordQueryTest {
     }
 
     @Test
-    public void testFixMatchFuzzyStartWithDigitDiedLoop() {
-        Set<String> matches = new WordQuery(getTestDictionary(), "8437").getMatches();
+    public void testMatchFuzzyNoDigits() {
+        Set<String> matches = new WordQuery(getTestDictionary(), "843728").getMatches();
 
         Assert.assertNotNull("Matches shouldn't be null", matches);
-        Assert.assertEquals("There should be 1 match for the number provided", 1, matches.size());
-        Assert.assertTrue("Invalid matching number", matches.contains("THE-7"));
+        Assert.assertTrue("Invalid matching number", matches.contains("THE-RAT"));
     }
 
     @Test
     public void testMatchFuzzyStartWithDigit() {
-        Set<String> matches = new WordQuery(getTestDictionary(), "843728").getMatches();
+        Set<String> matches = new WordQuery(getTestDictionary(), "3728").getMatches();
 
         Assert.assertNotNull("Matches shouldn't be null", matches);
-        Assert.assertEquals("There should be 1 match for the number provided", 2, matches.size());
-        Assert.assertTrue("Invalid matching number", matches.contains("THE-RAT"));
+        Assert.assertTrue("Invalid matching number", matches.contains("3-RAT"));
     }
 
     @Test
@@ -66,7 +59,6 @@ public class WordQueryTest {
         Set<String> matches = new WordQuery(getTestDictionary(), "467730").getMatches();
 
         Assert.assertNotNull("Matches shouldn't be null", matches);
-        Assert.assertEquals("There should be 1 match for the number provided", 1, matches.size());
         Assert.assertTrue("Invalid matching number", matches.contains("HORSE-0"));
     }
 
@@ -75,7 +67,6 @@ public class WordQueryTest {
         Set<String> matches = new WordQuery(getTestDictionary(), "462882").getMatches();
 
         Assert.assertNotNull("Matches shouldn't be null", matches);
-        Assert.assertEquals("There should be 1 match for the number provided", 1, matches.size());
         Assert.assertTrue("Invalid matching number", matches.contains("GOAT-8-A"));
     }
 

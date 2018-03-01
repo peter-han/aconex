@@ -1,5 +1,6 @@
 package com.phan.aconex.lib;
 
+import com.phan.aconex.utils.StringUtils;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,6 +47,16 @@ public class TranslatorTest {
     }
 
     @Test
+    public void testFromPhoneNumberConsecutiveDigits() {
+        /*
+        Ref: WordQueryTest.testMatchFuzzyEndWithDigit
+         */
+        Set<String> words = new Translator(getTestDictionary()).fromPhoneNumber("467730");
+        Assert.assertEquals("There should be 1 match for the number provided", 1, words.size());
+        Assert.assertTrue("Invalid matching number", words.contains("HORSE-0"));
+    }
+
+    @Test
     public void testFromPhoneNumberPunctuation() {
         Set<String> words = new Translator(defaultDictionary).fromPhoneNumber("2255.63");
         Assert.assertTrue(words.contains("CALL-ME"));
@@ -65,5 +76,15 @@ public class TranslatorTest {
         thrown.expect(FileNotFoundException.class);
 
         new Translator(defaultDictionary).fromFile("invalid file path");
+    }
+
+    private Dictionary getTestDictionary() {
+        try {
+            return new Dictionary(getClass().getResource("dict_valid.txt").getPath());
+        } catch (FileNotFoundException e) {
+            // impossible, for test cases
+        }
+
+        return null;
     }
 }

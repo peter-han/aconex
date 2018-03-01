@@ -42,6 +42,14 @@ public class StringUtils {
     }
 
     /**
+     * @param s
+     * @return
+     */
+    public static boolean isTwoConsecutiveDigits(String s) {
+        return s.matches(".*\\d-\\d.*");
+    }
+
+    /**
      * @param firstMatches
      * @param endMatches
      * @param currentDigit
@@ -52,32 +60,36 @@ public class StringUtils {
         if (CollectionUtils.isEmptyCollection(firstMatches) && CollectionUtils.isEmptyCollection(endMatches))
             throw new IllegalArgumentException("both first collection and end collection are empty");
 
+        Set<String> join;
+
         /*
         digit in the beginning
          */
         if (CollectionUtils.isEmptyCollection(firstMatches))
-            return endMatches.stream()
+            join = endMatches.stream()
                     .map(s -> joinStrings(new String[]{currentDigit, s}))
                     .collect(Collectors.toSet());
-
         /*
         digit in the end
          */
-        if (CollectionUtils.isEmptyCollection(endMatches))
-            return firstMatches.stream()
+        else if (CollectionUtils.isEmptyCollection(endMatches))
+            join = firstMatches.stream()
                     .map(s -> joinStrings(new String[]{s, currentDigit}))
                     .sorted(String::compareTo)
                     .collect(Collectors.toSet());
-
         /*
         digit in middle
          */
-        Set<String> join = new HashSet<>();
-        for (String firstMatch : firstMatches) {
-            for (String endMatch : endMatches) {
-                join.add(joinStrings(firstMatch, currentDigit, endMatch));
+        else {
+            join = new HashSet<>();
+
+            for (String firstMatch : firstMatches) {
+                for (String endMatch : endMatches) {
+                    join.add(joinStrings(firstMatch, currentDigit, endMatch));
+                }
             }
         }
+
         return join;
     }
 

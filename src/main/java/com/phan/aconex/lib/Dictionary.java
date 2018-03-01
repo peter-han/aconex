@@ -1,5 +1,7 @@
 package com.phan.aconex.lib;
 
+import com.phan.aconex.utils.StringUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,12 +11,20 @@ import java.util.logging.Logger;
 
 public class Dictionary {
 
-    private static final String DEFAULT_DICTIONARY_NAME = "google-10000-english.txt";
     private static final Logger LOGGER = Logger.getLogger(Dictionary.class.getName());
+    private static final String DEFAULT_DICTIONARY_PATH = "google-10000-english.txt";
 
     private static Dictionary defaultInstance;
 
-    private Map<Long, TreeSet<String>> index = new HashMap<>();
+    private Map<Long, Set<String>> index = new HashMap<>();
+
+    /**
+     * using system default dict.
+     */
+    private Dictionary() {
+        InputStream dict = Dictionary.class.getResourceAsStream(DEFAULT_DICTIONARY_PATH);
+        loadDictionary(dict);
+    }
 
     /**
      * using customer dict
@@ -23,35 +33,11 @@ public class Dictionary {
      * @throws FileNotFoundException
      */
     public Dictionary(String dictPath) throws FileNotFoundException {
-        LOGGER.fine("using customer dictionary");
         InputStream dict = new FileInputStream(new File(dictPath));
         loadDictionary(dict);
     }
 
-    /**
-     * using system default dict.
-     */
-    private Dictionary() {
-        LOGGER.fine("using default dictionary");
-        InputStream dict = getClass().getResourceAsStream(DEFAULT_DICTIONARY_NAME);
-        loadDictionary(dict);
-    }
-
-    /**
-     * @return
-     */
-    public static Dictionary getDefault() {
-        if (null == defaultInstance)
-            defaultInstance = new Dictionary();
-
-        return defaultInstance;
-    }
-
-    /**
-     * @param dict
-     */
     private void loadDictionary(InputStream dict) {
-
         LOGGER.fine("loading dictionary START");
 
         Scanner scanner = new Scanner(dict);
@@ -65,7 +51,7 @@ public class Dictionary {
             /*
             all caps & no spaces
              */
-            for (char c : word.toUpperCase().trim().toCharArray()) {
+            for (char c : StringUtils.purge(word).toCharArray()) {
                 stringBuilder.append(encoding(c));
             }
 
@@ -73,12 +59,12 @@ public class Dictionary {
             index
              */
             Long key = Long.parseLong(stringBuilder.toString());
-            TreeSet<String> words = index.get(key);
+            Set<String> words = index.get(key);
             if (null == words) {
-                words = new TreeSet<>();
+                words = new HashSet<>();
                 index.put(key, words);
             }
-            words.add(word.toUpperCase());
+            words.add(StringUtils.purge(word));
         }
 
         LOGGER.fine("loading dictionary END");
@@ -88,10 +74,20 @@ public class Dictionary {
     }
 
     /**
+     * @return
+     */
+    public static Dictionary getDefault() {
+        if (null == defaultInstance)
+            defaultInstance = new Dictionary();
+
+        return defaultInstance;
+    }
+
+    /**
      * @param key
      * @return
      */
-    public TreeSet<String> search(Long key) {
+    public Set<String> search(Long key) {
         return index.get(key);
     }
 

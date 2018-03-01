@@ -22,6 +22,7 @@ public class DictionaryTest {
         Dictionary dict = new Dictionary(path);
 
         Assert.assertNotNull(dict);
+        Assert.assertTrue(dict.search(Long.valueOf(7426)).contains("PHAN"));
     }
 
     @Test

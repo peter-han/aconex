@@ -60,6 +60,9 @@ public class Main {
         System.exit(0);
     }
 
+    /**
+     * @return
+     */
     static Dictionary getDictionary() {
         /*
         1. specified dictionary?
@@ -68,13 +71,17 @@ public class Main {
         String dictionaryPath = System.getProperty(SYS_PROP_DICTIONARY_OVERRIDE);
 
         if (!StringUtils.isEmpty(dictionaryPath)) {
+            LOGGER.info("Specified dictionary: " + dictionaryPath);
+
             try {
                 dict = new Dictionary(dictionaryPath);
             } catch (FileNotFoundException e) {
                 throw new IllegalArgumentException("invalid dictionary path");
             }
-        } else
+        } else {
+            LOGGER.info("using default dictionary");
             dict = Dictionary.getDefault();
+        }
 
         return dict;
     }

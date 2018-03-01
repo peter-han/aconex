@@ -15,6 +15,9 @@ public class WordQueryTest {
 
     private Dictionary defaultDictionary = Dictionary.getDefault();
 
+    public WordQueryTest() {
+    }
+
     @Test
     public void testNullDictionary() {
         thrown.expect(IllegalArgumentException.class);

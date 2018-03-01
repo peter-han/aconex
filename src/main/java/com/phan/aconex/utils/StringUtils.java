@@ -75,7 +75,7 @@ public class StringUtils {
         Set<String> join = new HashSet<>();
         for (String firstMatch : firstMatches) {
             for (String endMatch : endMatches) {
-                join.add(joinStrings(new String[]{firstMatch, currentDigit, endMatch}));
+                join.add(joinStrings(firstMatch, currentDigit, endMatch));
             }
         }
         return join;

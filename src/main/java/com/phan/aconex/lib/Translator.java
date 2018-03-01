@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
  */
 public class Translator {
 
-    private static final Logger LOGGER = Logger.getLogger(Translator.class.getName());
-
     private final Dictionary dictionary;
 
     public Translator(Dictionary dictionary) {

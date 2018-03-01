@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class Dictionary {
 
     private static final Logger LOGGER = Logger.getLogger(Dictionary.class.getName());
-    private static final String DEFAULT_DICTIONARY_PATH = Dictionary.class.getResource("google-10000-english.txt").getPath();
+    private static final String DEFAULT_DICTIONARY_PATH = "google-10000-english.txt";
 
     private static Dictionary defaultInstance;
 
@@ -21,8 +21,9 @@ public class Dictionary {
     /**
      * using system default dict.
      */
-    private Dictionary() throws FileNotFoundException {
-        this(DEFAULT_DICTIONARY_PATH);
+    private Dictionary() {
+        InputStream dict = Dictionary.class.getResourceAsStream(DEFAULT_DICTIONARY_PATH);
+        loadDictionary(dict);
     }
 
     /**
@@ -32,10 +33,12 @@ public class Dictionary {
      * @throws FileNotFoundException
      */
     public Dictionary(String dictPath) throws FileNotFoundException {
-
-        LOGGER.fine("loading dictionary START");
-
         InputStream dict = new FileInputStream(new File(dictPath));
+        loadDictionary(dict);
+    }
+
+    private void loadDictionary(InputStream dict) {
+        LOGGER.fine("loading dictionary START");
 
         Scanner scanner = new Scanner(dict);
         while (scanner.hasNext()) {
@@ -74,13 +77,8 @@ public class Dictionary {
      * @return
      */
     public static Dictionary getDefault() {
-        if (null == defaultInstance) {
-            try {
-                defaultInstance = new Dictionary();
-            } catch (FileNotFoundException e) {
-                // impossible, system have one default dictionary
-            }
-        }
+        if (null == defaultInstance)
+            defaultInstance = new Dictionary();
 
         return defaultInstance;
     }

@@ -18,6 +18,9 @@ public class TranslatorTest {
 
     private Dictionary defaultDictionary = Dictionary.getDefault();
 
+    public TranslatorTest() {
+    }
+
     @Test
     public void testInvalidPhoneEmpty() {
         // expect
@@ -38,6 +41,12 @@ public class TranslatorTest {
 
     @Test
     public void testFromPhoneNumber() {
+        Set<String> words = new Translator(defaultDictionary).fromPhoneNumber("3569377");
+        Assert.assertTrue(words.contains("FLOWERS"));
+    }
+
+    @Test
+    public void testFromPhoneNumberPunctuation() {
         Set<String> words = new Translator(defaultDictionary).fromPhoneNumber("2255.63");
         Assert.assertTrue(words.contains("CALL-ME"));
     }

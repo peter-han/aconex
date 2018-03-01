@@ -86,7 +86,7 @@ public class MainTest {
     public void testOutput() {
         Assert.assertTrue(Main.report(null));
 
-        Set<String> data = new HashSet<>(Arrays.asList(new String[]{"a", "b"}));
+        Set<String> data = new HashSet<>(Arrays.asList("a", "b"));
         Assert.assertTrue(Main.report(data));
     }
 }

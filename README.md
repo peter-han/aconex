@@ -6,6 +6,7 @@
 * [Setup](./README.md#setup)
 * [Running the app](./README.md#running-the-app)
 * [Running the tests](./README.md#running-the-tests)
+* [Functions](./README.md#functions)
 
 ### Setup
 1. Make sure you have Java 8 installed in your machine. 
@@ -17,6 +18,14 @@
 ### Running the app:
 ```java -jar ./build/libs/aconex-1.0-SNAPSHOT.jar```
 
+- Running with custome dictionary
+
+```java -Ddictionary.file={your dictionary file path} -jar ./build/libs/aconex-1.0-SNAPSHOT.jar```
+
+- Running with phone number file
+
+```java -jar ./build/libs/aconex-1.0-SNAPSHOT.jar {your phone number file}```
+
 ### Running the tests:
     
 ```./gradlew clean test```
@@ -25,7 +34,7 @@ Then you would see testing report at
 ```../aconex/build/reports/tests/test/index.html```
 
 ### Functions
-show a user possible matches for a list of provided phone numbers.
+Show a user possible matches for a list of provided phone numbers.
 
 - input
     - reads from files specified as command-line arguments

@@ -49,8 +49,8 @@ public class StringUtilsTest {
 
     @Test
     public void joinWords() {
-        Set<String> firstSet = new HashSet<>(Arrays.asList(new String[]{"a", "b"}));
-        Set<String> secondSet = new HashSet<>(Arrays.asList(new String[]{"c", "d"}));
+        Set<String> firstSet = new HashSet<>(Arrays.asList("a", "b"));
+        Set<String> secondSet = new HashSet<>(Arrays.asList("c", "d"));
         String currentDigit = "0";
 
         {

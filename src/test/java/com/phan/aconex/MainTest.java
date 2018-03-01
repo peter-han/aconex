@@ -8,6 +8,7 @@
 
 package com.phan.aconex;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +19,9 @@ import org.junit.runners.JUnit4;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @RunWith(JUnit4.class)
 public class MainTest {
@@ -61,23 +65,28 @@ public class MainTest {
     }
 
     @Test
-    public void testSystemInputDictFileNotFound() {
+    public void testInputDictFileNotFound() {
         // expect
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("invalid dictionary path");
 
         System.setProperty(Main.SYS_PROP_DICTIONARY_OVERRIDE, "test invalid dictionary path");
-        Main.main(null);
+        Main.getDictionary();
     }
 
     @Test
-    public void testSystemInputDictFile() {
-        exit.expectSystemExit();
-
+    public void testInputDictFile() {
         String path = getClass().getResource("test_input_dict.txt").getPath();
         System.setProperty(Main.SYS_PROP_DICTIONARY_OVERRIDE, path);
 
-        String phoneNumberFilePath = getClass().getResource("test_input_phone_numbers.txt").getPath();
-        Main.main(new String[]{phoneNumberFilePath});
+        Assert.assertNotNull(Main.getDictionary());
+    }
+
+    @Test
+    public void testOutput() {
+        Assert.assertTrue(Main.report(null));
+
+        Set<String> data = new HashSet<>(Arrays.asList(new String[]{"a", "b"}));
+        Assert.assertTrue(Main.report(data));
     }
 }

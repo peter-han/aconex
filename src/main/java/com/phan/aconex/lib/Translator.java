@@ -66,14 +66,4 @@ public class Translator {
 
         return new WordQuery(dictionary, purgedPhone).getMatches();
     }
-
-    /**
-     * @param result
-     */
-    private void output(Set<String> result) {
-        /*
-        TODO append 1-800 in front?
-         */
-        LOGGER.info(String.join("\n", result.stream().sorted().collect(Collectors.toList())));
-    }
 }

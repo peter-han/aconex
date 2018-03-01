@@ -4,6 +4,7 @@ import com.phan.aconex.utils.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class WordQuery {
 
@@ -26,6 +27,15 @@ public class WordQuery {
 
 
         if (null == found || found.isEmpty()) {
+
+            /*
+            if no match can be made, a single digit can be left as is at that point.
+             */
+            if (phone.length() == 1) {
+                matches.add(phone);
+                return;
+            }
+
             /*
             fission if more than 2 digits; otherwise we should drop this branch.
              */
@@ -47,13 +57,10 @@ public class WordQuery {
                 } catch (IllegalArgumentException e) {
                     /*
                     fission with single digit
-                    if no match can be made, a single digit can be left as is at that point.
                      */
                     try {
                         String currentDigit = String.valueOf(phone.charAt(i));
-                        // the first digit?
                         String firstString = phone.substring(0, i);
-                        // the last digit?
                         String endString = phone.substring(i + 1, phone.length());
 
                         matches.addAll(fissionMatches(firstString, endString, currentDigit));

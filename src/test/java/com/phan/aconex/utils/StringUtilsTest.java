@@ -39,6 +39,13 @@ public class StringUtilsTest {
     }
 
     @Test
+    public void isTwoConsecutiveDigits() {
+        Assert.assertTrue(StringUtils.isTwoConsecutiveDigits("ASD3-7-ABC"));
+        Assert.assertTrue(StringUtils.isTwoConsecutiveDigits("3-7-ABC"));
+        Assert.assertFalse(StringUtils.isTwoConsecutiveDigits("3-ABC-7-ABC"));
+    }
+
+    @Test
     public void joinWordsException() {
         // expect
         thrown.expect(IllegalArgumentException.class);

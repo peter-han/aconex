@@ -1,3 +1,10 @@
-Alpha
-Beta
-	Gamma
+goat
+horse
+chimp
+a
+the
+mouse
+cat
+bat
+rat
+p.han

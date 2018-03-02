@@ -4,11 +4,10 @@ import com.phan.aconex.utils.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public class WordQuery {
+class WordQuery {
 
-    private Set<String> matches = new HashSet<>();
+    private final Set<String> matches = new HashSet<>();
     private final Dictionary dict;
 
     public WordQuery(Dictionary dict, String phone) throws IllegalArgumentException {
@@ -66,7 +65,6 @@ public class WordQuery {
                         matches.addAll(fissionMatches(firstString, endString, currentDigit));
                     } catch (IllegalArgumentException e1) {
                         // both firstNode and endNode have to be valid, otherwise drop this branch and continue
-                        continue;
                     }
                 }
             }

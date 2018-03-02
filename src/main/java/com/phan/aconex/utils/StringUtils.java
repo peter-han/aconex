@@ -9,8 +9,6 @@ import static java.util.stream.Collectors.joining;
 
 public class StringUtils {
 
-    private static final String DASH = "-";
-
     private StringUtils() {
     }
 

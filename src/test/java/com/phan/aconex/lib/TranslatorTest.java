@@ -1,6 +1,5 @@
 package com.phan.aconex.lib;
 
-import com.phan.aconex.utils.StringUtils;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,9 +14,9 @@ import java.util.Set;
 public class TranslatorTest {
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
-    private Dictionary defaultDictionary = Dictionary.getDefault();
+    private final Dictionary defaultDictionary = Dictionary.getDefault();
 
     public TranslatorTest() {
     }

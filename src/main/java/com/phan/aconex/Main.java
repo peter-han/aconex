@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class Main {
+class Main {
 
     public static final String SYS_PROP_DICTIONARY_OVERRIDE = "dictionary.file";
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());

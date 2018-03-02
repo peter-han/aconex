@@ -14,7 +14,7 @@ import java.util.Set;
 public class DictionaryTest {
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void testCustomizedDictionary() throws FileNotFoundException {
@@ -22,7 +22,7 @@ public class DictionaryTest {
         Dictionary dict = new Dictionary(path);
 
         Assert.assertNotNull(dict);
-        Assert.assertTrue(dict.search(Long.valueOf(7426)).contains("PHAN"));
+        Assert.assertTrue(dict.search(7426L).contains("PHAN"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class DictionaryTest {
     @Test
     public void search() {
         Dictionary dictionary = Dictionary.getDefault();
-        Set<String> words = dictionary.search(Long.valueOf(63));
+        Set<String> words = dictionary.search(63L);
 
         Assert.assertTrue(words.contains("ME"));
     }

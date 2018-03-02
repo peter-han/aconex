@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.logging.Logger;
 
+@SuppressWarnings("ALL")
 public class Dictionary {
 
     private static final Logger LOGGER = Logger.getLogger(Dictionary.class.getName());
@@ -16,7 +17,7 @@ public class Dictionary {
 
     private static Dictionary defaultInstance;
 
-    private Map<Long, Set<String>> index = new HashMap<>();
+    private final Map<Long, Set<String>> index = new HashMap<>();
 
     /**
      * using system default dict.
@@ -59,11 +60,7 @@ public class Dictionary {
             index
              */
             Long key = Long.parseLong(stringBuilder.toString());
-            Set<String> words = index.get(key);
-            if (null == words) {
-                words = new HashSet<>();
-                index.put(key, words);
-            }
+            Set<String> words = index.computeIfAbsent(key, k -> new HashSet<>());
             words.add(StringUtils.purge(word));
         }
 
